@@ -1,3 +1,6 @@
+# Leave out or comment out `username` and `password` to disable HTTP Basic
+# authentication.
+#
 username: "admin"
 password: "admin"
 riak_hosts:
