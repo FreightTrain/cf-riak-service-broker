@@ -1,4 +1,4 @@
-# Riak Service Broker for Cloud Foundry
+# Riak Service Broker for Cloud Foundry [![Build Status](https://travis-ci.org/hectcastro/cf-riak-service-broker.png)](https://travis-ci.org/hectcastro/cf-riak-service-broker)
 
 _This code works, but it's new. Proceed with caution and please tell us when it breaks._
 
