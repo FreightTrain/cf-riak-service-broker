@@ -1,5 +1,3 @@
-require "catalog"
-
 module RiakBroker
   class CatalogsController < Sinatra::Base
     before do
