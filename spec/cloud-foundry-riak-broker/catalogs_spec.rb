@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe RiakBroker::Catalog do
+describe RiakBroker::CatalogsController do
   def app
-    @app ||= RiakBroker::Catalog
+    @app ||= RiakBroker::CatalogsController
   end
 
   context "GET /" do

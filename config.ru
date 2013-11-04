@@ -7,7 +7,7 @@ use Rack::Auth::Basic, "Cloud Foundry Riak Service Broker" do |username, passwor
 end
 
 run Rack::URLMap.new({
-  "/v2/catalog"            => RiakBroker::Catalog,
+  "/v2/catalog"            => RiakBroker::CatalogController,
   "/v2/service_instances"  => RiakBroker::ServiceInstances,
   "/v2/service_bindings"   => RiakBroker::ServiceBindings
 })

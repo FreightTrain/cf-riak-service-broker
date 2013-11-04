@@ -3,12 +3,8 @@ module RiakBroker
   BITCASK_PLAN_ID = "dc97f6e9-799f-4c33-9a9a-0336fb056068"
   LEVELDB_PLAN_ID = "4d077f64-c0a6-40d8-928d-fe4014acb044"
 
-  class Catalog < Sinatra::Base
-    before do
-      content_type "application/json"
-    end
-
-    get "/" do
+  class Catalog
+    def to_json
       {
         "services" => [
           "id" => RIAK_SERVICE_ID,
