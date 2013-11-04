@@ -11,6 +11,9 @@ describe RiakBroker::ServiceBindings do
 
   context "PUT /:id" do
     before(:each) do
+      app.any_instance.stub(:already_bound?).and_return(false)
+      app.any_instance.stub(:create_binding)
+
       put(
         "/#{binding_uuid}",
         { "service_instance_id" => service_instance_uuid }.to_json,
@@ -39,6 +42,8 @@ describe RiakBroker::ServiceBindings do
     end
 
     it "should include a 409 status code" do
+      app.any_instance.stub(:already_bound?).and_return(true)
+
       put(
         "/#{binding_uuid}",
         { "service_instance_id" => service_instance_uuid }.to_json,
@@ -51,6 +56,9 @@ describe RiakBroker::ServiceBindings do
 
   context "DELETE /:id" do
     before(:each) do
+      app.any_instance.stub(:already_bound?).and_return(true)
+      app.any_instance.stub(:destroy_binding)
+
       put(
         "/#{binding_uuid}",
         { "service_instance_id" => service_instance_uuid }.to_json,
@@ -64,6 +72,8 @@ describe RiakBroker::ServiceBindings do
     end
 
     it "should include a 404 status code" do
+      app.any_instance.stub(:already_bound?).and_return(false)
+
       delete "/#{SecureRandom.uuid}"
       last_response.status.should == 404
     end

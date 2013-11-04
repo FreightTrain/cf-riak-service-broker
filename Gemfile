@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "sinatra", "~> 1.4.3"
-gem "rest-client", "~> 1.6.7", require: "rest_client"
+gem "riak-client", "~> 1.4.2", require: "riak"
 
 group :test do
   gem "rake", "~> 10.1.0"

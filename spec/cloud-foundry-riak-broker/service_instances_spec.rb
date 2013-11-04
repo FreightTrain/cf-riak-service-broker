@@ -10,6 +10,9 @@ describe RiakBroker::ServiceInstances do
 
   context "PUT /:id" do
     before(:each) do
+      app.any_instance.stub(:already_provisioned?).and_return(false)
+      app.any_instance.stub(:add_service)
+
       put(
         "/#{service_uuid}",
         { "plan_id" => plan_uuid }.to_json,
@@ -26,6 +29,7 @@ describe RiakBroker::ServiceInstances do
     end
 
     it "should include a 409 status code" do
+      app.any_instance.stub(:already_provisioned?).and_return(true)
       put(
         "/#{service_uuid}",
         { "plan_id" => plan_uuid }.to_json,
@@ -37,6 +41,9 @@ describe RiakBroker::ServiceInstances do
 
   context "DELETE /:id" do
     before(:each) do
+      app.any_instance.stub(:already_provisioned?).and_return(true)
+      app.any_instance.stub(:remove_service)
+
       put(
         "/#{service_uuid}",
         { "plan_id" => plan_uuid }.to_json,
@@ -50,6 +57,8 @@ describe RiakBroker::ServiceInstances do
     end
 
     it "should include a 404 status code" do
+      app.any_instance.stub(:already_provisioned?).and_return(false)
+
       delete "/#{SecureRandom.uuid}"
       last_response.status.should == 404
     end

@@ -1,23 +1,27 @@
-require "rest_client"
+require "riak"
 
 module RiakBroker
-  SERVICE_BINDINGS = { }
-
   class ServiceBindings < Sinatra::Base
     before do
       content_type "application/json"
+
+      @client = Riak::Client.new(nodes: [ { host: CONFIG["riak_hosts"].sample, http_port: 8098 } ])
+      @service_bindings = @client.bucket("service_bindings")
     end
 
     helpers do
       def create_binding(binding_id, service_id)
-        SERVICE_BINDINGS[binding_id] = service_id
+        object = @service_bindings.get_or_new(binding_id)
+        object.content_type = "application/json"
+        object.data = { service_instance_id: service_id }.to_json
+        object.store({ returnbody: false })
       end
 
       def destroy_binding(binding_id)
-        SERVICE_BINDINGS.delete(binding_id)
+        @service_bindings.delete(binding_id)
       end
       def already_bound?(binding_id)
-        SERVICE_BINDINGS.member?(binding_id)
+        @service_bindings.exists?(binding_id)
       end
     end
 
