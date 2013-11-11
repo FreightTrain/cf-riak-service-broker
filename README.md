@@ -69,6 +69,8 @@ Now that we've got our service broker started we're going to add it to CF. The u
 $ cf add-service-broker --name riak --username admin --password admin --url http://10.84.17.214.xip.io:9292
 .
 Adding service broker Riak... OK
+$ cf curl PUT /v2/service_plans/[BITCASK_PLAN_UUID] -b '{"public":true}'
+$ cf curl PUT /v2/service_plans/[LEVELDB_PLAN_UUID] -b '{"public":true}'
 ```
 
 ### Example with Sample App
@@ -78,7 +80,6 @@ Pop open a new terminal and clone our [simple cf sample broker app](https://gith
 ```
 $ git clone https://github.com/hectcastro/cf-riak-service-broker-sample-app.git
 $ cd cf-riak-service-broker-sample-app
-$ bundle 
 ```
 
 We're now going to use `cf push` which will deploy our application. This will spit out a series of options. Follow the instructions provided. The full output will look something like this:
