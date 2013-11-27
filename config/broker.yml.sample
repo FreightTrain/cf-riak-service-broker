@@ -1,0 +1,8 @@
+username: "admin"
+password: "admin"
+riak_hosts:
+  - "riak1.example.com"
+  - "riak2.example.com"
+  - "riak3.example.com"
+  - "riak4.example.com"
+  - "riak5.example.com"
