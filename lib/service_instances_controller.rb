@@ -1,5 +1,9 @@
 module RiakBroker
   class ServiceInstancesController < Sinatra::Base
+
+    Riak.disable_list_keys_warnings = true
+    I18n.enforce_available_locales = false
+
     before do
       content_type "application/json"
     end
