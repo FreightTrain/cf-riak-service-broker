@@ -10,14 +10,11 @@ module RiakBroker
 
       service_instance = RiakBroker::ServiceInstance.new(service_id)
 
-      unless service_instance.provisioned?
-        service_instance.save(plan_id)
-        status 201
-
-        {}.to_json
-      else
-        status 409
-      end
+      halt 409 if service_instance.provisioned?
+      halt 503 if service_instance.limit_exceeded?
+      service_instance.save(plan_id)
+      status 201
+      {}.to_json
     end
 
     delete "/:id" do

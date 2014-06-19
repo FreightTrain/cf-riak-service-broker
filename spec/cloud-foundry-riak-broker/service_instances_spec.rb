@@ -38,6 +38,17 @@ describe RiakBroker::ServiceInstancesController do
       )
       last_response.status.should == 409
     end
+
+    it "should include a 503 status code" do
+      RiakBroker::ServiceInstance.any_instance.stub(:limit_exceeded?).and_return(true)
+      put(
+        "/#{service_uuid}",
+        { "plan_id" => plan_uuid }.to_json,
+        { "CONTENT_TYPE" => "application/json" }
+      )
+      last_response.status.should == 503
+    end
+
   end
 
   context "DELETE /:id" do

@@ -25,6 +25,14 @@ module RiakBroker
       @service_instances.exist?(@service_id)
     end
 
+    def limit_exceeded?
+      instance_limit && @service_instances.keys.size >= instance_limit.to_i
+    end
+
+    def instance_limit
+      CONFIG['service_instance_limit']
+    end
+
     private
 
     def set_backend(plan_id)
